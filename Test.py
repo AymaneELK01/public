@@ -4,7 +4,7 @@ import pandas as pd
 # Saisie du mot de passe
 password = st.text_input("Mot de passe", type="password")
 
-if password == "monmotdepasse":
+if password == "OCPP2O5":
     st.success("Accès autorisé")
     # Ton application ici
 else:

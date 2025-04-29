@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 EXPECTED_TOKEN = st.secrets["access"]["token"]
 
 # Lire le token depuis l'URL
-query_params = st.experimental_get_query_params()
+query_params = st.query_params
 provided_token = query_params.get("token", [""])[0]
 
 if provided_token != EXPECTED_TOKEN:

@@ -1,20 +1,34 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
-# Lire un secret simple
-token = st.secrets["token_secret"]
-st.write("Le token secret est :", token)
+# Lire le token secret depuis secrets.toml
+EXPECTED_TOKEN = st.secrets["access"]["token"]
 
-# Lire un secret dans une section
-username = st.secrets["database"]["username"]
-password = st.secrets["database"]["password"]
+# Lire le token depuis l'URL
+query_params = st.query_params
+provided_token = query_params.get("token", [""])[0]
 
-st.write("Nom d'utilisateur de la base de données :", username)
+if provided_token != EXPECTED_TOKEN:
+    st.error("Accès refusé : token invalide ou manquant.")
+    st.stop()
 
+st.title("📊 Visualisation des ventes mensuelles")
 
-# Titre principal
-st.title("Capacités Production : Analyse et Comparaison")
+# Exemple de données
+data = {
+    "Mois": ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+    "Ventes": [120, 150, 100, 170, 200, 130]
+}
+df = pd.DataFrame(data)
 
-# Description ou options globales si nécessaire
-st.write("Bienvenue dans l'outil d'analyse des capacités de production.")
-st.write("Utilisez le menu de gauche pour naviguer entre les fonctionnalités disponibles.")
+# Affichage du tableau
+st.write("Voici les données de ventes :")
+st.dataframe(df)
+
+# Affichage du graphique
+fig, ax = plt.subplots()
+ax.plot(df["Mois"], df["Ventes"], marker='o')
+ax.set_title("Évolution des ventes")
+ax.set_ylabel("Ventes")
+st.pyplot(fig)

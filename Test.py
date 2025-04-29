@@ -5,10 +5,9 @@ import matplotlib.pyplot as plt
 # Lire le token secret depuis secrets.toml
 EXPECTED_TOKEN = st.secrets["access"]["token"]
 
-# Lire le token depuis l'URL
-query_params = st.experimental_get_query_params()
-
-provided_token = query_params.get("token", [""])[0]
+# Lire le token depuis l'URL (nouvelle méthode)
+query_params = st.query_params
+provided_token = query_params.get("token", "")
 
 if provided_token != EXPECTED_TOKEN:
     st.error("Accès refusé : token invalide ou manquant.")

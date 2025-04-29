@@ -1,15 +1,16 @@
 import streamlit as st
 import pandas as pd
 
-# Saisie du mot de passe
-password = st.text_input("Mot de passe", type="password")
+# Lire un secret simple
+token = st.secrets["token_secret"]
+st.write("Le token secret est :", token)
 
-if password == "OCPP2O5":
-    st.success("Accès autorisé")
-    # Ton application ici
-else:
-    st.warning("Mot de passe requis pour accéder à l'application")
-    st.stop()
+# Lire un secret dans une section
+username = st.secrets["database"]["username"]
+password = st.secrets["database"]["password"]
+
+st.write("Nom d'utilisateur de la base de données :", username)
+
 
 # Titre principal
 st.title("Capacités Production : Analyse et Comparaison")
